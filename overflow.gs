@@ -5,7 +5,7 @@
 // overflow 127.0.0.1 80 0xFFFFFFF the_value extra
 
 metaxploit = include_lib("/lib/metaxploit.so")
-if not metaxploit then metaxploit = include_lib("metaxploit.so")
+if not metaxploit then metaxploit = include_lib(current_path + "/metaxploit.so".trim)
 net_session = metaxploit.net_use(params[0], params[1].to_int)
 metalib = net_session.dump_lib
 if params.len == 4 then
