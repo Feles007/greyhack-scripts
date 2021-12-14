@@ -4,7 +4,7 @@
 // scanner p /path/to/lib
 
 metaxploit = include_lib("/lib/metaxploit.so")
-if not metaxploit then metaxploit = include_lib("metaxploit.so")
+if not metaxploit then metaxploit = include_lib(current_path + "/metaxploit.so".trim)
 if params[0] == "n" then
 	net_session = metaxploit.net_use(params[1], params[2].to_int)
 	metalib = net_session.dump_lib
