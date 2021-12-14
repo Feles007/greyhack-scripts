@@ -2,7 +2,7 @@
 // wireless network with highest strength
 
 crypto = include_lib("/lib/crypto.so")
-if not crypto then crypto = include_lib("crypto.so")
+if not crypto then crypto = include_lib(current_path + "/crypto.so".trim)
 pc = get_shell.host_computer
 interface = pc.network_devices.split(" ")[0]
 max_percentage = 0
