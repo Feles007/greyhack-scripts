@@ -54,6 +54,7 @@ if not source_file then exit("Source file not found")
 if output_folder then output_folder = computer.File(output_folder) else output_folder = source_file.parent
 if not output_folder then exit("Output folder not found")
 // Build
+if should_run then print(" ")
 print("Building " + source_file.path + " at " + output_folder.path + "/")
 print(shell.build(source_file.path, output_folder.path))
 // Get compiled file
@@ -71,6 +72,7 @@ if custom_name then
 end if
 // Run
 if should_run then
-	print("Running " + output_file.path + "\n")
-	shell.launch(output_file.path, run_params.trim)
+	run_params = run_params.trim
+	print("\nRunning " + output_file.path + " with command:\n'" + output_file.name + " " + run_params + "'\n")
+	shell.launch(output_file.path, run_params)
 end if
