@@ -49,6 +49,7 @@ end while
 // Create objects
 if login then shell = get_shell(login[0], login[1]) else shell = get_shell
 computer = shell.host_computer
+if not source_file then usage()
 source_file = computer.File(source_file) 
 if not source_file then exit("Source file not found")
 if output_folder then output_folder = computer.File(output_folder) else output_folder = source_file.parent
@@ -73,6 +74,10 @@ end if
 // Run
 if should_run then
 	run_params = run_params.trim
-	print("\nRunning " + output_file.path + " with command:\n'" + output_file.name + " " + run_params + "'\n")
+	if run_params == "" then
+		print("\nRunning " + output_file.path + " with command:\n'" + output_file.name + "'\n")
+	else
+		print("\nRunning " + output_file.path + " with command:\n'" + output_file.name + " " + run_params + "'\n")
+	end if
 	shell.launch(output_file.path, run_params)
 end if
