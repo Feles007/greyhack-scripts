@@ -72,5 +72,5 @@ end if
 // Run
 if should_run then
 	print("Running " + output_file.path + "\n")
-	shell.launch(output_file.path, run_params)
+	shell.launch(output_file.path, run_params.trim)
 end if
