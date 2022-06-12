@@ -1,7 +1,8 @@
 usage = function()
-	exit("Usage:\n-b (disables running)\n-r <root password>\n-u <username> <password>\n-i <source file>\n-o <output folder>\n-n <custom name>\n-p <run params>\nDefault name: xyz.src -> xyz\nCustom name works by renaming,\nso will overwrite the default name.")
+	exit("Usage:\n	-b (disables running)\n	-r <root password>\n	-u <username> <password>\n	-i <source file>\n	-o <output folder>\n	-n <custom name>\n	-p <run params>\n	Default name: xyz.src -> xyz\n	Custom name works by renaming,\n	so will overwrite the default name.")
 end function
 if (params == []) or (params[0] == "-h") or (params[0] == "--help") or (params[0] == "-?") then usage()
+
 // Param parsing
 login = null
 source_file = null
@@ -46,6 +47,7 @@ while true
 	end if
 	i = i + 1
 end while
+
 // Create objects
 if login then shell = get_shell(login[0], login[1]) else shell = get_shell
 computer = shell.host_computer
@@ -54,10 +56,13 @@ source_file = computer.File(source_file)
 if not source_file then exit("Source file not found")
 if output_folder then output_folder = computer.File(output_folder) else output_folder = source_file.parent
 if not output_folder then exit("Output folder not found")
+if source_file.get_content == "" then exit("Source file is empty")
+
 // Build
 if should_run then print(" ")
 print("Building " + source_file.path + " at " + output_folder.path + "/")
 print(shell.build(source_file.path, output_folder.path))
+
 // Get compiled file
 name_list = source_file.name.split(".")
 name_list.pop
@@ -67,10 +72,12 @@ for i in range(0, name_list.len - 1)
 	if i != name_list.len - 1 then output_file = output_file + "."
 end for
 output_file = computer.File(output_folder.path + "/" + output_file)
+
 // Rename if custom name is specified
 if custom_name then
 	output_file.rename(custom_name)
 end if
+
 // Run
 if should_run then
 	run_params = run_params.trim
